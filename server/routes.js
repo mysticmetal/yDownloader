@@ -1,9 +1,7 @@
-import fs from 'fs';
-import path from 'path';
-import mime from 'mime';
 import cors from 'cors';
 import bodyParser from 'body-parser'
 import yDownload from './downloader'
+
 
 export default (app) => {
     
@@ -17,14 +15,33 @@ export default (app) => {
     app.use(bodyParser.urlencoded({ extended: true }));
 
     app.get('/',function(req,res){
-      res.end('Do post on /download');
+      return res.end('Do post on /download');
     })
         
+  
     app.post('/download', function (req, res) {
-      console.log('>>>>>>>>>>>>>',req.body);
-        yDownload(req.body.id, () => {
-          res.status(200).json({id : req.body.id})
-        })
+    
+      console.log('>>>>>>body>>>>>>>',req.body);
+    
+      const callback = (error,vInfo) => {
+        if(error){
+          return res.json({error:"wrong url",vInfo});
+        }
+        return res.json({error:null,vInfo});
+      }
+    
+      const vParam={
+        vId:req.body.vId,
+        vQuality:req.body.vQuality,
+        subtitle:req.body.subtitle
+      }
+
+      if(!vParam.vId){
+        return res.json('provide video id');
+      }
+
+      yDownload(vParam, callback);
+    
     });
 
 }
