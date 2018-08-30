@@ -83,19 +83,21 @@ class Downloader extends React.Component{
         })
         .then(res=>res.json())
         .then(res=>{
-          console.log(res)
-          if(res.status){
-            let indx = this.state.playlist.map( v=> v.vId).indexOf(res.vInfo.vId) ;
-            let newPlaylist = [...this.state.playlist];
+          console.log(res);
+          let indx = this.state.playlist.map( v=> v.vId).indexOf(res.vInfo.vId) ;
+          let newPlaylist = [...this.state.playlist];
+          if(res.error){
             newPlaylist=[...newPlaylist.slice(0,indx),{status:'error',vId:res.vInfo.vId,...newPlaylist.slice(indx+1)}];
-            this.setState({playlist:newPlaylist});
+          }else{
+            newPlaylist=[...newPlaylist.slice(0,indx),{status:'completed',vId:res.vInfo.vId,...newPlaylist.slice(indx+1)}];
           }
+          this.setState({playlist:newPlaylist});
         });
 
         newPlaylist=[...newPlaylist,{status:'active',vId:this.state.vId}];
       
       }else{
-        if(newPlaylist[indx].status){
+        if(newPlaylist[indx].status==='error'){
           
           console.log('downloading');
           fetch(SERVER_URL+'/download',{
@@ -113,13 +115,15 @@ class Downloader extends React.Component{
           })
           .then(res=>res.json())
           .then(res=>{
-            console.log(res)
-            if(res.status){
-              let indx = this.state.playlist.map( v=> v.vId).indexOf(res.vInfo.vId) ;
-              let newPlaylist = [...this.state.playlist];
+            console.log(res);
+            let indx = this.state.playlist.map( v=> v.vId).indexOf(res.vInfo.vId) ;
+            let newPlaylist = [...this.state.playlist];
+            if(res.error){
               newPlaylist=[...newPlaylist.slice(0,indx),{status:'error',vId:res.vInfo.vId,...newPlaylist.slice(indx+1)}];
-              this.setState({playlist:newPlaylist});
+            }else{
+              newPlaylist=[...newPlaylist.slice(0,indx),{status:'completed',vId:res.vInfo.vId,...newPlaylist.slice(indx+1)}];
             }
+            this.setState({playlist:newPlaylist});
           });  
         
           newPlaylist=[...newPlaylist.slice(0,indx),{status:'active',vId:this.state.vId},...newPlaylist.slice(indx+1)];
@@ -149,7 +153,7 @@ class Downloader extends React.Component{
         <div className="videoContainer" >
         {
           !(this.state.fetched) && !(this.state.vId) &&
-          <img className="imagePreview" width="420" height="315" alt="video preview"
+          <img  className="imagePreview" width="420" height="315" alt="video preview"
           src={Yimage} />
         }
         {  this.state.vId &&
