@@ -1,5 +1,8 @@
 import React from 'react';
 import './Playlist.css';
+import  arrowGreen from './arrowGreen.png';
+import arrowYellow from './arrowYellow.png';
+import arrowRed from './arrowRed.png';
 
 const  Playlist =(props)=>{
   return(
@@ -15,7 +18,7 @@ const  Playlist =(props)=>{
                 return (
                     <div className="videoDescription">
                       <div className="downloadStatus" >
-                        <h3 className="arrow arrowRed " > => </h3> 
+                        <img className="arrow arrowRed " alt="Downloading Error" src={arrowRed} /> 
                       </div>
                       <div className="videoTitle" >
                         <h3 className="videoTitleText" > {element.vId}</h3>
@@ -27,7 +30,7 @@ const  Playlist =(props)=>{
                   return (
                     <div className="videoDescription">
                       <div className="downloadStatus" >
-                        <h3 className="arrow arrowYellow " > => </h3> 
+                        <img className="arrow arrowYellow" alt="Downloading" src={arrowYellow} /> 
                       </div>
                       <div className="videoTitle" >
                         <h3 className="videoTitleText" > {element.vId}</h3>
@@ -38,7 +41,7 @@ const  Playlist =(props)=>{
                   return (
                     <div className="videoDescription">
                       <div className="downloadStatus" >
-                        <h3 className="arrow arrowGreen " > => </h3> 
+                        <img className="arrow arrowGreen " alt="Download Complete" src={arrowGreen} /> 
                       </div>
                       <div className="videoTitle" >
                         <h3 className="videoTitleText" > {element.vId}</h3>

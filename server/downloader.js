@@ -34,10 +34,11 @@ export default function download(vParam, callback) {
 
     video.on('error',function(err){
         console.log(err)
-        callback('wrong url',{vId:vParam.vId});
+        callback('error while downloading',{vId:vParam.vId});
     });
     
     video.on('end', () => {
+        console.log('download completed');
         callback(null,{vId:vParam.vId});
     });
 

@@ -2,6 +2,7 @@ import React from 'react';
 import {SERVER_URL} from './appConfig';
 import Playlist from './Playlist';
 import Yimage from './youtube.png';
+import './Downloader.css';
 class Downloader extends React.Component{
   constructor(){
     super();
@@ -163,19 +164,22 @@ class Downloader extends React.Component{
         
         <div className="videoAttributes" >
         
+          <label className="labelText labelTextQuality" htmlFor="qualitySelect" >Select Quality</label>
+          
           <div className="videoQualitySelector">
-            <label className="labelText" htmlFor="qualitySelect" >Select Quality</label>
             <select className="videoQuality" name="videoQuality" id="qualitySelect" defaultValue="medium"  onChange={this.handleChange} >
               <option value="audio" >Audio Only</option> 
               <option value="low">Low</option>
               <option value="medium" >Medium</option>
               <option value="high">High</option>
             </select>
+          
           </div>
         
           <div className="subtitleSelector"> 
-            <label className="labelText" htmlFor="subInput" >With Subtitle</label>
+            <label className="labelText labelTextSubtitle " htmlFor="subInput" >With Subtitle</label>
             <input className="subtitleCheckbox" type="checkbox" id="subInput" name="subInput" onChange={this.handleChange} />
+            <span className="checkmark" ></span>
           </div>
 
         </div>
