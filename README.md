@@ -5,3 +5,6 @@
 * npm install
 * npm start
 * npm startServer
+#
+## Preview
+![](public/preview.png)
